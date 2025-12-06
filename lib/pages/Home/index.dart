@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hm_shop/api/home.dart';
 import 'package:hm_shop/componets/home/HmCategory.dart';
 import 'package:hm_shop/componets/home/HmHot.dart';
 import 'package:hm_shop/componets/home/HmMoreList.dart';
@@ -14,15 +15,26 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final List<BannerItem> _bannerList = [
-    BannerItem(id: "1", imgUrl: "http://127.0.0.1:8080/banner/1.jpg"),
-    BannerItem(id: "2", imgUrl: "http://127.0.0.1:8080/banner/2.jpg"),
-    BannerItem(id: "3", imgUrl: "http://127.0.0.1:8080/banner/3.jpg"),
-    BannerItem(id: "4", imgUrl: "http://127.0.0.1:8080/banner/4.jpg"),
-    BannerItem(id: "5", imgUrl: "http://127.0.0.1:8080/banner/5.jpg"),
-    BannerItem(id: "6", imgUrl: "http://127.0.0.1:8080/banner/6.jpg"),
-    BannerItem(id: "7", imgUrl: "http://127.0.0.1:8080/banner/7.jpg"),
+  List<BannerItem> _bannerList = [
+    // BannerItem(id: "1", imgUrl: "http://127.0.0.1:8080/banner/1.jpg"),
+    // BannerItem(id: "2", imgUrl: "http://127.0.0.1:8080/banner/2.jpg"),
+    // BannerItem(id: "3", imgUrl: "http://127.0.0.1:8080/banner/3.jpg"),
+    // BannerItem(id: "4", imgUrl: "http://127.0.0.1:8080/banner/4.jpg"),
+    // BannerItem(id: "5", imgUrl: "http://127.0.0.1:8080/banner/5.jpg"),
+    // BannerItem(id: "6", imgUrl: "http://127.0.0.1:8080/banner/6.jpg"),
+    // BannerItem(id: "7", imgUrl: "http://127.0.0.1:8080/banner/7.jpg"),
   ];
+
+  void initState() {
+    super.initState();
+    _getBannerList();
+  }
+
+  void _getBannerList() async {
+    final res = await getBannerListApi();
+    _bannerList = res;
+    setState(() {});
+  }
 
   List<Widget> _getScrollChildren() {
     return [
