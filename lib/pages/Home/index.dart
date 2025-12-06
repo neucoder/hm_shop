@@ -4,6 +4,7 @@ import 'package:hm_shop/componets/home/HmHot.dart';
 import 'package:hm_shop/componets/home/HmMoreList.dart';
 import 'package:hm_shop/componets/home/HmSlider.dart';
 import 'package:hm_shop/componets/home/HmSuggestion.dart';
+import 'package:hm_shop/viewmodels/home.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key? key}) : super(key: key);
@@ -13,9 +14,19 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final List<BannerItem> _bannerList = [
+    BannerItem(id: "1", imgUrl: "http://127.0.0.1:8080/banner/1.jpg"),
+    BannerItem(id: "2", imgUrl: "http://127.0.0.1:8080/banner/2.jpg"),
+    BannerItem(id: "3", imgUrl: "http://127.0.0.1:8080/banner/3.jpg"),
+    BannerItem(id: "4", imgUrl: "http://127.0.0.1:8080/banner/4.jpg"),
+    BannerItem(id: "5", imgUrl: "http://127.0.0.1:8080/banner/5.jpg"),
+    BannerItem(id: "6", imgUrl: "http://127.0.0.1:8080/banner/6.jpg"),
+    BannerItem(id: "7", imgUrl: "http://127.0.0.1:8080/banner/7.jpg"),
+  ];
+
   List<Widget> _getScrollChildren() {
     return [
-      SliverToBoxAdapter(child: HmSlider()),
+      SliverToBoxAdapter(child: HmSlider(bannerList: _bannerList)),
       SliverToBoxAdapter(child: SizedBox(height: 10)),
       SliverToBoxAdapter(child: HmCategory()),
       SliverToBoxAdapter(child: SizedBox(height: 10)),
