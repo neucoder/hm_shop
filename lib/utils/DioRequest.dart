@@ -23,9 +23,9 @@ class DioRequest {
         },
         onResponse: (response, handler) {
           // 打印响应数据
-          print("响应数据:");
-          print(response);
-          print("=" * 80);
+          // print("响应数据:");
+          // print(response);
+          // print("=" * 80);
           // http状态码200-300 之间的状态码，会执行这里
           if (response.statusCode! >= 200 && response.statusCode! < 300) {
             return handler.next(response);
@@ -52,9 +52,9 @@ class DioRequest {
 
   Future<dynamic> get(String url, {Map<String, dynamic>? params}) {
     // 打印请求参数
-    print("请求参数:");
-    print(params);
-    print("=" * 80);
+    // print("请求参数:");
+    // print(params);
+    // print("=" * 80);
     return _handleResponse(_dio.get(url, queryParameters: params));
   }
 

@@ -4,7 +4,10 @@ class BannerItem {
   BannerItem({required this.id, required this.imgUrl});
 
   factory BannerItem.fromJson(Map<String, dynamic> json) {
-    return BannerItem(id: json['id'] ?? "", imgUrl: json['imgUrl'] ?? "");
+    return BannerItem(
+      id: json['id']?.toString() ?? "",
+      imgUrl: json['imgUrl']?.toString() ?? "",
+    );
   }
 }
 
@@ -25,9 +28,9 @@ class CategoryItem {
 
   factory CategoryItem.fromJson(Map<String, dynamic> json) {
     return CategoryItem(
-      id: json['id'] ?? "",
-      name: json['name'] ?? "",
-      picture: json['picture'] ?? "",
+      id: json['id']?.toString() ?? "",
+      name: json['name']?.toString() ?? "",
+      picture: json['picture']?.toString() ?? "",
       children: json['children'] != null
           ? (json['children'] as List)
                 .map((e) => CategoryItem.fromJson(e))
@@ -52,8 +55,8 @@ class SpecialRecommendation {
 
   factory SpecialRecommendation.fromJson(Map<String, dynamic> json) {
     return SpecialRecommendation(
-      id: json['id'] ?? "",
-      title: json['title'] ?? "",
+      id: json['id']?.toString() ?? "",
+      title: json['title']?.toString() ?? "",
       subTypes:
           (json['subTypes'] as List?)
               ?.map((e) => SubType.fromJson(e))
@@ -72,8 +75,8 @@ class SubType {
 
   factory SubType.fromJson(Map<String, dynamic> json) {
     return SubType(
-      id: json['id'] ?? "",
-      title: json['title'] ?? "",
+      id: json['id']?.toString() ?? "",
+      title: json['title']?.toString() ?? "",
       goodsItems: GoodsItems.fromJson(json['goodsItems'] ?? {}),
     );
   }
@@ -128,12 +131,50 @@ class GoodsItem {
 
   factory GoodsItem.fromJson(Map<String, dynamic> json) {
     return GoodsItem(
-      id: json['id'] ?? "",
-      name: json['name'] ?? "",
-      desc: json['desc'],
-      price: json['price'] ?? "0.00",
-      picture: json['picture'] ?? "",
-      orderNum: json['orderNum'] ?? 0,
+      id: json['id']?.toString() ?? "",
+      name: json['name']?.toString() ?? "",
+      desc: json['desc']?.toString(),
+      price: json['price']?.toString() ?? "0.00",
+      picture: json['picture']?.toString() ?? "",
+      orderNum: json['orderNum'] as int? ?? 0,
+    );
+  }
+}
+
+/**
+ * 
+ * {
+"id": "4027466",
+"name": "儿童气泵软底学步二阶段学步鞋",
+"price": 239,
+"picture": "https://yanxuan-item.nosdn.127.net/19bedfd20a12842b5d7f7b909a62e877.jpg",
+"payCount": 0
+},
+ */
+
+// 根据上面json数据来生成类和工厂方法
+class GoodDetailItem {
+  String id;
+  String name;
+  String price;
+  String picture;
+  int payCount;
+
+  GoodDetailItem({
+    required this.id,
+    required this.name,
+    required this.price,
+    required this.picture,
+    required this.payCount,
+  });
+
+  factory GoodDetailItem.fromJson(Map<String, dynamic> json) {
+    return GoodDetailItem(
+      id: json['id']?.toString() ?? "",
+      name: json['name']?.toString() ?? "",
+      price: json['price']?.toString() ?? "0.00",
+      picture: json['picture']?.toString() ?? "",
+      payCount: json['payCount'] as int? ?? 0,
     );
   }
 }

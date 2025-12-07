@@ -13,12 +13,19 @@ class HmSuggestion extends StatefulWidget {
 
 class _HmSuggestionState extends State<HmSuggestion> {
   List<GoodsItem> _getDisplayItems() {
+    print(
+      "HmSuggestion _getDisplayItems() subTypes长度: ${widget.specialRecommendationList.subTypes.length}",
+    );
     if (widget.specialRecommendationList.subTypes.isEmpty) {
+      print("HmSuggestion _getDisplayItems() subTypes为空");
       return [];
     }
-    return widget.specialRecommendationList.subTypes.first.goodsItems.items
-        .take(3)
-        .toList();
+    final firstSubType = widget.specialRecommendationList.subTypes.first;
+    print("HmSuggestion _getDisplayItems() 第一个子类型标题: ${firstSubType.title}");
+    print(
+      "HmSuggestion _getDisplayItems() 商品数量: ${firstSubType.goodsItems.items.length}",
+    );
+    return firstSubType.goodsItems.items.take(3).toList();
   }
 
   List<Widget> _getChildrenList() {

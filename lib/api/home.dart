@@ -19,7 +19,26 @@ Future<List<CategoryItem>> getCategoryListApi() async {
 
 // 获取特惠推荐列表
 Future<SpecialRecommendation> getSpecialRecommendationListApi() async {
-  return SpecialRecommendation.fromJson(
-    await DioRequest().get(HttpConstants.PRODUCT_LIST),
-  );
+  final res = await DioRequest().get(HttpConstants.PRODUCT_LIST);
+  return SpecialRecommendation.fromJson(res);
+}
+
+// 热榜推荐
+Future<SpecialRecommendation> getInVogueListApi() async {
+  final res = await DioRequest().get(HttpConstants.IN_VOGUE_LIST);
+  return SpecialRecommendation.fromJson(res);
+}
+
+// 一站式推荐
+Future<SpecialRecommendation> getOneStopListApi() async {
+  final res = await DioRequest().get(HttpConstants.ONE_STOP_LIST);
+  return SpecialRecommendation.fromJson(res);
+}
+
+// 推荐列表
+Future<List<GoodDetailItem>> getRecommendListAPI() async {
+  final res = await DioRequest().get(HttpConstants.RECOMMEND_LIST);
+  return (res as List)
+      .map((e) => GoodDetailItem.fromJson(e as Map<String, dynamic>))
+      .toList();
 }

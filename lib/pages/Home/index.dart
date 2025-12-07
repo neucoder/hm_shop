@@ -23,6 +23,42 @@ class _HomePageState extends State<HomePage> {
     title: "",
     subTypes: [],
   );
+  // 热榜推荐列表
+  SpecialRecommendation _inVogueList = SpecialRecommendation(
+    id: "",
+    title: "",
+    subTypes: [],
+  );
+  // 一站式推荐列表
+  SpecialRecommendation _oneStopList = SpecialRecommendation(
+    id: "",
+    title: "",
+    subTypes: [],
+  );
+
+  // 推荐列表
+  List<GoodDetailItem> _recommendList = [];
+
+  // 获取推荐列表
+  void _getRecommendList() async {
+    final res = await getRecommendListAPI();
+    _recommendList = res;
+    setState(() {});
+  }
+
+  // 获取热榜推荐列表
+  void _getInVogueList() async {
+    final res = await getInVogueListApi();
+    _inVogueList = res;
+    setState(() {});
+  }
+
+  // 获取一站式推荐列表
+  void _getOneStopList() async {
+    final res = await getOneStopListApi();
+    _oneStopList = res;
+    setState(() {});
+  }
 
   // 获取分类列表
   void _getCategoryList() async {
@@ -31,28 +67,31 @@ class _HomePageState extends State<HomePage> {
     setState(() {});
   }
 
-  List<BannerItem> _bannerList = [
-    // BannerItem(id: "1", imgUrl: "http://127.0.0.1:8080/banner/1.jpg"),
-    // BannerItem(id: "2", imgUrl: "http://127.0.0.1:8080/banner/2.jpg"),
-    // BannerItem(id: "3", imgUrl: "http://127.0.0.1:8080/banner/3.jpg"),
-    // BannerItem(id: "4", imgUrl: "http://127.0.0.1:8080/banner/4.jpg"),
-    // BannerItem(id: "5", imgUrl: "http://127.0.0.1:8080/banner/5.jpg"),
-    // BannerItem(id: "6", imgUrl: "http://127.0.0.1:8080/banner/6.jpg"),
-    // BannerItem(id: "7", imgUrl: "http://127.0.0.1:8080/banner/7.jpg"),
-  ];
+  List<BannerItem> _bannerList = [];
 
   void initState() {
     super.initState();
     _getBannerList();
     _getCategoryList();
     _getSpecialRecommendationList();
+    _getInVogueList();
+    _getOneStopList();
+    _getRecommendList();
   }
 
   // 获取特惠推荐列表
   void _getSpecialRecommendationList() async {
-    final res = await getSpecialRecommendationListApi();
-    _specialRecommendationList = res;
-    setState(() {});
+    try {
+      final res = await getSpecialRecommendationListApi();
+      print("特惠推荐API返回数据: ${res.subTypes.length}");
+      if (res.subTypes.isNotEmpty) {
+        print("第一个子类型商品数量: ${res.subTypes.first.goodsItems.items.length}");
+      }
+      _specialRecommendationList = res;
+      setState(() {});
+    } catch (e) {
+      print("获取特惠推荐列表错误: $e");
+    }
   }
 
   void _getBannerList() async {
@@ -78,14 +117,18 @@ class _HomePageState extends State<HomePage> {
         child: Flex(
           direction: Axis.horizontal,
           children: [
-            Expanded(child: HmHot()),
+            Expanded(
+              child: HmHot(result: _inVogueList, type: "hot"),
+            ),
             SizedBox(width: 10),
-            Expanded(child: HmHot()),
+            Expanded(
+              child: HmHot(result: _oneStopList, type: "step"),
+            ),
           ],
         ),
       ),
       SliverToBoxAdapter(child: SizedBox(height: 10)),
-      HmMoreList(),
+      HmMoreList(recommendList: _recommendList),
     ];
   }
 
