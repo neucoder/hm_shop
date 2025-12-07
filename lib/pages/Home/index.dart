@@ -15,6 +15,16 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  // 分类列表
+  List<CategoryItem> _categoryList = [];
+
+  // 获取分类列表
+  void _getCategoryList() async {
+    final res = await getCategoryListApi();
+    _categoryList = res;
+    setState(() {});
+  }
+
   List<BannerItem> _bannerList = [
     // BannerItem(id: "1", imgUrl: "http://127.0.0.1:8080/banner/1.jpg"),
     // BannerItem(id: "2", imgUrl: "http://127.0.0.1:8080/banner/2.jpg"),
@@ -28,6 +38,7 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     _getBannerList();
+    _getCategoryList();
   }
 
   void _getBannerList() async {
@@ -40,7 +51,7 @@ class _HomePageState extends State<HomePage> {
     return [
       SliverToBoxAdapter(child: HmSlider(bannerList: _bannerList)),
       SliverToBoxAdapter(child: SizedBox(height: 10)),
-      SliverToBoxAdapter(child: HmCategory()),
+      SliverToBoxAdapter(child: HmCategory(categoryList: _categoryList)),
       SliverToBoxAdapter(child: SizedBox(height: 10)),
 
       SliverToBoxAdapter(child: HmSuggestion()),
