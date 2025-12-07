@@ -40,10 +40,22 @@ class _HomePageState extends State<HomePage> {
   List<GoodDetailItem> _recommendList = [];
 
   // 获取推荐列表
+  int _page = 1;
+  bool _isLoading = false;
+  bool _hasMore = true;
   void _getRecommendList() async {
-    final res = await getRecommendListAPI();
+    if (_isLoading || !_hasMore) return;
+    _isLoading = true;
+    int requsetLimit = _page * 8;
+    final res = await getRecommendListAPI({"limit": requsetLimit.toString()});
     _recommendList = res;
     setState(() {});
+    _isLoading = false;
+    if (_recommendList.length < requsetLimit) {
+      _hasMore = false;
+      return;
+    }
+    _page++;
   }
 
   // 获取热榜推荐列表
@@ -77,6 +89,19 @@ class _HomePageState extends State<HomePage> {
     _getInVogueList();
     _getOneStopList();
     _getRecommendList();
+    _registerScrollController();
+  }
+
+  // 注册滚动控制器
+  void _registerScrollController() {
+    _scrollController.addListener(() {
+      if (_scrollController.offset >=
+          _scrollController.position.maxScrollExtent) {
+        // 滚动到最底部
+        _getRecommendList();
+        // print("滚动到最底部");
+      }
+    });
   }
 
   // 获取特惠推荐列表
@@ -132,8 +157,14 @@ class _HomePageState extends State<HomePage> {
     ];
   }
 
+  // 滚动控制器
+  ScrollController _scrollController = ScrollController();
+
   @override
   Widget build(BuildContext context) {
-    return CustomScrollView(slivers: _getScrollChildren());
+    return CustomScrollView(
+      slivers: _getScrollChildren(),
+      controller: _scrollController,
+    );
   }
 }
