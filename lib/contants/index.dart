@@ -8,4 +8,5 @@ class HttpConstants {
   // banner
   static const String BANNER_URL = "/home/banner";
   static const String CATEGORY_URL = "/home/category/head";
+  static const String PRODUCT_LIST = "/hot/preference";
 }

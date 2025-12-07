@@ -17,6 +17,12 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   // 分类列表
   List<CategoryItem> _categoryList = [];
+  // 特惠推荐列表
+  SpecialRecommendation _specialRecommendationList = SpecialRecommendation(
+    id: "",
+    title: "",
+    subTypes: [],
+  );
 
   // 获取分类列表
   void _getCategoryList() async {
@@ -39,6 +45,14 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     _getBannerList();
     _getCategoryList();
+    _getSpecialRecommendationList();
+  }
+
+  // 获取特惠推荐列表
+  void _getSpecialRecommendationList() async {
+    final res = await getSpecialRecommendationListApi();
+    _specialRecommendationList = res;
+    setState(() {});
   }
 
   void _getBannerList() async {
@@ -54,7 +68,11 @@ class _HomePageState extends State<HomePage> {
       SliverToBoxAdapter(child: HmCategory(categoryList: _categoryList)),
       SliverToBoxAdapter(child: SizedBox(height: 10)),
 
-      SliverToBoxAdapter(child: HmSuggestion()),
+      SliverToBoxAdapter(
+        child: HmSuggestion(
+          specialRecommendationList: _specialRecommendationList,
+        ),
+      ),
       SliverToBoxAdapter(child: SizedBox(height: 10)),
       SliverToBoxAdapter(
         child: Flex(

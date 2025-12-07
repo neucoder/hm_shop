@@ -61,9 +61,9 @@ class DioRequest {
   Future<dynamic> _handleResponse(Future<Response<dynamic>> task) async {
     try {
       Response<dynamic> res = await task;
-      print("响应数据:");
-      print(res.data);
-      print("=" * 80);
+      // print("响应数据:");
+      // print(res.data);
+      // print("=" * 80);
 
       final data = res.data as Map<String, dynamic>;
       if (data['code'] == GlobalConstants.SUCCESS_CODE) {
