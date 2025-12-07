@@ -13,19 +13,12 @@ class HmSuggestion extends StatefulWidget {
 
 class _HmSuggestionState extends State<HmSuggestion> {
   List<GoodsItem> _getDisplayItems() {
-    print(
-      "HmSuggestion _getDisplayItems() subTypes长度: ${widget.specialRecommendationList.subTypes.length}",
-    );
     if (widget.specialRecommendationList.subTypes.isEmpty) {
-      print("HmSuggestion _getDisplayItems() subTypes为空");
       return [];
     }
-    final firstSubType = widget.specialRecommendationList.subTypes.first;
-    print("HmSuggestion _getDisplayItems() 第一个子类型标题: ${firstSubType.title}");
-    print(
-      "HmSuggestion _getDisplayItems() 商品数量: ${firstSubType.goodsItems.items.length}",
-    );
-    return firstSubType.goodsItems.items.take(3).toList();
+    return widget.specialRecommendationList.subTypes.first.goodsItems.items
+        .take(3)
+        .toList();
   }
 
   List<Widget> _getChildrenList() {
@@ -40,13 +33,13 @@ class _HmSuggestionState extends State<HmSuggestion> {
             child: Image.network(
               errorBuilder: (context, error, stackTrace) => Image.asset(
                 "lib/assets/home_cmd_inner.png",
-                width: 100,
-                height: 140,
+                width: 80,
+                height: 100,
                 fit: BoxFit.cover,
               ),
               items[index].picture,
-              width: 100,
-              height: 140,
+              width: 80,
+              height: 100,
               fit: BoxFit.cover,
             ),
           ),
@@ -99,7 +92,7 @@ class _HmSuggestionState extends State<HmSuggestion> {
 
   Widget _buildLeft() {
     return Container(
-      width: 100,
+      width: 90,
       height: 140,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
